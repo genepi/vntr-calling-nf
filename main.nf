@@ -1,6 +1,6 @@
 params.input="test-data/*.bam"
-params.region="$baseDir/data/peterReadExtract.hg38.camo.LPA.realign.sorted.bed"
-params.reference="$baseDir/data/kiv2.fasta"
+params.region="$baseDir/reference-data/peterReadExtract.hg38.camo.LPA.realign.sorted.bed"
+params.reference="$baseDir/reference-data/kiv2.fasta"
 
 params.output="output"
 
