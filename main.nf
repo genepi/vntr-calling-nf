@@ -1,13 +1,13 @@
+params.project="UKBB-LPA-KIV2"
 params.input="test-data/*.bam"
 params.region="$baseDir/reference-data/peterReadExtract.hg38.camo.LPA.realign.sorted.bed"
 params.reference="$baseDir/reference-data/kiv2.fasta"
-
+params.contig="KIV2_6"
 params.output="output"
 
 bam_files_ch = Channel.fromPath(params.input)
 region_file_ch = file(params.region)
 ref_fasta = file(params.reference)
-
 
 process build_bwa_index {
 
@@ -55,5 +55,17 @@ process realign {
 	"""
 	bwa mem -M ${ref_fasta} -R "@RG\\tID:LPA-exome-${baseName}-hg38_camo-kiv2\\tSM:${baseName}\\tPL:ILLUMINA" ${r1_fastq} ${r2_fastq} | samtools sort -@ 15 -o ${baseName}.kiv2.realigned.bam -
 
+	"""
+}
+
+process variantCalling {
+  publishDir "${params.output}", mode: "copy"
+  input:
+	  file bamFile from realigned_ch.collect()
+    file ref_fasta
+  output:
+	  file "*.txt" into variantcalling_ch
+	"""
+	 mutserve call ${bamFile} --output ${params.project}.txt --reference ${ref_fasta} --contig-name ${params.contig}
 	"""
 }
