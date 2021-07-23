@@ -1,13 +1,16 @@
-params.project="UKBB-LPA-KIV2"
-params.input="test-data/*.bam"
+params.project="exome-validation"
+params.input="$baseDir/test-data/*.bam"
 params.region="$baseDir/reference-data/peterReadExtract.hg38.camo.LPA.realign.sorted.bed"
 params.reference="$baseDir/reference-data/kiv2.fasta"
 params.contig="KIV2_6"
+params.threads = (Runtime.runtime.availableProcessors() - 1)
 params.output="output"
 
 bam_files_ch = Channel.fromPath(params.input)
 region_file_ch = file(params.region)
 ref_fasta = file(params.reference)
+contig = file(params.contig)
+
 
 process build_bwa_index {
 
@@ -53,19 +56,21 @@ process realign {
   output:
 	  file "*.kiv2.realigned.bam" into realigned_ch
 	"""
-	bwa mem -M ${ref_fasta} -R "@RG\\tID:LPA-exome-${baseName}-hg38_camo-kiv2\\tSM:${baseName}\\tPL:ILLUMINA" ${r1_fastq} ${r2_fastq} | samtools sort -@ 15 -o ${baseName}.kiv2.realigned.bam -
+	bwa mem -M ${ref_fasta} -R "@RG\\tID:LPA-exome-${baseName}\\tSM:${baseName}\\tPL:ILLUMINA" ${r1_fastq} ${r2_fastq} | samtools sort -@ 15 -o ${baseName}.kiv2.realigned.bam -
 
 	"""
 }
 
-process variantCalling {
+
+process callVariants {
   publishDir "${params.output}", mode: "copy"
   input:
-	  file bamFile from realigned_ch.collect()
-    file ref_fasta
+	   file bamFile from realigned_ch.collect()
+		 file ref_fasta
+		 file contig
   output:
-	  file "*.txt" into variantcalling_ch
+	  file "${params.project}.*" into variants_ch
 	"""
-	 mutserve call ${bamFile} --output ${params.project}.txt --reference ${ref_fasta} --contig-name ${params.contig}
+	mutserve call --output ${params.project}.vcf --reference ${ref_fasta} --contig-name ${contig} ${bamFile} --no-ansi --threads ${params.threads}
 	"""
 }
