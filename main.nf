@@ -1,5 +1,6 @@
 params.project="exome-validation"
 params.input="$baseDir/test-data/*.bam"
+params.gold="$baseDir/reference-data/gold/gold.txt"
 params.region="$baseDir/reference-data/peterReadExtract.hg38.camo.LPA.realign.sorted.bed"
 params.reference="$baseDir/reference-data/kiv2.fasta"
 params.contig="KIV2_6"
@@ -9,8 +10,10 @@ params.output="output"
 bam_files_ch = Channel.fromPath(params.input)
 region_file_ch = file(params.region)
 ref_fasta = file(params.reference)
+gold_standard = file(params.gold)
 contig = file(params.contig)
 
+MutservePerformance = "$baseDir/bin/MutservePerformance.java"
 
 process build_bwa_index {
 
@@ -69,8 +72,26 @@ process callVariants {
 		 file ref_fasta
 		 file contig
   output:
-	  file "${params.project}.*" into variants_ch
+	  file "${params.project}.txt" into variants_ch
 	"""
-	mutserve call --output ${params.project}.vcf --reference ${ref_fasta} --contig-name ${contig} ${bamFile} --no-ansi --threads ${params.threads}
+	mutserve call --output ${params.project}.vcf --reference ${ref_fasta} --contig-name ${contig} ${bamFile} --no-ansi
 	"""
+}
+
+
+process calculatePerformance {
+
+publishDir "$params.output", mode: 'copy'
+
+  input:
+  file mutserve_file from variants_ch
+  file gold_standard
+
+  output:
+  file "*.txt" into mutserve_performance_ch
+
+  """
+  jbang ${MutservePerformance} --gold ${gold_standard} --output ${params.project}-performance.txt ${mutserve_file}
+  """
+
 }
