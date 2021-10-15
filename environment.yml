@@ -1,13 +1,13 @@
 # You can use this file to create a conda environment for this pipeline:
 #   conda env create -f environment.yml
-name: dark-regions
+name: exome-cnv-nf
 channels:
   - defaults
   - bioconda
   - conda-forge
 dependencies:
-  - samtools=1.12
+  - samtools=1.13
   - bedtools=2.30.0
   - bwa=0.7.17
-  - java-jdk=8.0.112
+  - openjdk=11.0.9
   - unzip
