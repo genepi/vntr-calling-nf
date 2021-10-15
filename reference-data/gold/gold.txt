@@ -1,0 +1,2 @@
+ID	POS	ALT
+Test	514	T
