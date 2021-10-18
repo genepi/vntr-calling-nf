@@ -1,3 +1,5 @@
+nextflow.enable.dsl = 2
+
 params.project="exome-validation"
 params.input="$baseDir/test-data/*.bam"
 params.gold="$baseDir/reference-data/gold/gold.txt"
@@ -15,49 +17,68 @@ contig = file(params.contig)
 
 MutservePerformance = "$baseDir/bin/MutservePerformance.java"
 
-process build_bwa_index {
+
+requiredParams = [
+    'project', 'input',
+    'gold', 'region',
+    'reference', 'contig'
+]
+
+for (param in requiredParams) {
+    if (params[param] == null) {
+      exit 1, "Parameter ${param} is required."
+    }
+}
+
+if(params.outdir == null) {
+  outdir = "output/${params.project}"
+} else {
+  outdir = params.outdir
+}
+
+process BUILD_BWA_INDEX {
 
     input:
-    file ref_fasta
+    path ref_fasta
 
     output:
-    file "*.{amb,ann,bwt,pac,sa}" into bwa_index
+    path "*.{amb,ann,bwt,pac,sa}", emit: bwa_index_ch
 
     """
     bwa index "${ref_fasta}"
     """
 }
 
-process extractReads {
+process EXTRACT_READS {
   input:
-	  file bamFile from bam_files_ch
-		file regionFile from region_file_ch
+	  path bamFile
+		path regionFile
   output:
-	  file "*.extracted.bam" into extracted_ch
+	  path "*.extracted.bam", emit: extracted_bams_ch
 	"""
 	samtools view -h -@ 15 -L ${regionFile} ${bamFile} | awk '\$5 < 10 || \$1 ~ "^@"' | samtools view -hb - | samtools sort -n -@ 15 -o ${bamFile.baseName}.extracted.bam -
 	"""
 }
 
 
-process bamToFastq {
+process BAM_TO_FASTQ {
   input:
-	  file bamFile from extracted_ch
+	  path bamFile
   output:
-	  tuple val("${bamFile.baseName}"), "*.r1.fastq", "*.r2.fastq" into fastq_ch
+	  tuple val("${bamFile.baseName}"), path("*.r1.fastq"), path("*.r2.fastq"), emit: fastq_ch
 	"""
 	 bedtools bamtofastq -i ${bamFile} -fq ${bamFile.baseName}.r1.fastq -fq2 ${bamFile.baseName}.r2.fastq
 	"""
 }
 
-process realign {
+process REALIGN_FASTQ {
   publishDir "${params.output}", mode: "copy"
   input:
-	   tuple baseName, file(r1_fastq), file(r2_fastq) from fastq_ch
-		 file ref_fasta
-		 file "*" from bwa_index
+	   tuple val(baseName), path(r1_fastq), path(r2_fastq)
+		 path ref_fasta
+		 path "*"
   output:
-	  file "*.kiv2.realigned.bam" into realigned_ch
+	  path "*.kiv2.realigned.bam", emit: realigned_ch
 	"""
 	bwa mem -M ${ref_fasta} -R "@RG\\tID:LPA-exome-${baseName}\\tSM:${baseName}\\tPL:ILLUMINA" ${r1_fastq} ${r2_fastq} | samtools sort -@ 15 -o ${baseName}.kiv2.realigned.bam -
 
@@ -65,33 +86,43 @@ process realign {
 }
 
 
-process callVariants {
+process CALL_VARIANTS {
   publishDir "${params.output}", mode: "copy"
   input:
-	   file bamFile from realigned_ch.collect()
-		 file ref_fasta
-		 file contig
+	   path bamFile
+		 path ref_fasta
+		 path contig
   output:
-	  file "${params.project}.txt" into variants_ch
+	  path "${params.project}.txt", emit: variants_ch
 	"""
-	mutserve call --output ${params.project}.vcf --reference ${ref_fasta} --contig-name ${contig} ${bamFile} --no-ansi
+	mutserve call --output ${params.project}.vcf --reference ${ref_fasta} --deletions --contig-name ${contig} ${bamFile} --no-ansi
 	"""
 }
 
 
-process calculatePerformance {
+process CALCULATE_PERFORMANCE {
 
 publishDir "$params.output", mode: 'copy'
 
   input:
-  file mutserve_file from variants_ch
-  file gold_standard
+  path mutserve_file
+  path gold_standard
 
   output:
-  file "*.txt" into mutserve_performance_ch
+  path "*.txt", emit: mutserve_performance_ch
 
   """
   jbang ${MutservePerformance} --gold ${gold_standard} --output ${params.project}-performance.txt ${mutserve_file}
   """
 
+}
+
+
+workflow {
+    BUILD_BWA_INDEX(ref_fasta)
+    EXTRACT_READS(bam_files_ch,region_file_ch)
+    BAM_TO_FASTQ(EXTRACT_READS.out.extracted_bams_ch)
+    REALIGN_FASTQ(BAM_TO_FASTQ.out.fastq_ch,ref_fasta,BUILD_BWA_INDEX.out.bwa_index_ch)
+    CALL_VARIANTS(REALIGN_FASTQ.out.realigned_ch.collect(),ref_fasta,contig)
+    CALCULATE_PERFORMANCE(CALL_VARIANTS.out.variants_ch,gold_standard)
 }
