@@ -20,3 +20,12 @@ RUN wget https://github.com/jbangdev/jbang/releases/download/v0.79.0/jbang-0.79.
     mv jbang-0.79.0 jbang  && \
     rm jbang*.zip
 ENV PATH="/opt/jbang/bin:${PATH}"
+
+
+# Install freebayes
+RUN mkdir /opt/freebayes
+WORKDIR "/opt/freebayes"
+RUN wget https://github.com/freebayes/freebayes/releases/download/v1.3.4/freebayes-1.3.4-linux-static-AMD64.gz && \
+    gunzip freebayes-*-linux-static-AMD64.gz && \
+    chmod +x ./freebayes-*-linux-static-AMD64
+ENV PATH="/opt/freebayes:${PATH}"
