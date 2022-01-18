@@ -16,7 +16,7 @@ nextflow run genepi/exome-cnv-nf -r v0.0.2 -profile test,<docker,singularity>
 3) Run the pipeline on your data
 
 ```
-nextflow run genepi/gwas-regenie -c <nextflow.config> -r v0.0.2 -profile <docker,singularity>
+nextflow run genepi/exome-cnv-nf -c <nextflow.config> -r v0.0.2 -profile <docker,singularity>
 ```
 
 ## Development
