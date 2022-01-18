@@ -1,5 +1,5 @@
 process CALL_VARIANTS_DEEPVARIANT {
-  publishDir "${params.output}", mode: "copy"
+  publishDir "${params.output}/deepvariant", mode: "copy"
   container 'google/deepvariant:1.3.0'
 
   input:
@@ -7,10 +7,10 @@ process CALL_VARIANTS_DEEPVARIANT {
 		 path ref_fasta
      path ref_fasta_fai
   output:
-	  path "${bamFile}.vcf", emit: variants_ch
+	  path "${bamFile}_deepvariant.vcf", emit: variants_ch
 
 	"""
   samtools index ${bamFile}
-	/opt/deepvariant/bin/run_deepvariant --model_type=WES --output_vcf ${bamFile}.vcf --ref ${ref_fasta} --reads ${bamFile}
+	/opt/deepvariant/bin/run_deepvariant --model_type=WES --output_vcf ${bamFile}_deepvariant.vcf --ref ${ref_fasta} --reads ${bamFile}
 	"""
 }
