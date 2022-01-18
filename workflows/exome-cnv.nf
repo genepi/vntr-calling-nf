@@ -45,10 +45,10 @@ include { CALCULATE_PERFORMANCE } from '../modules/local/calculate_performance'
 
 
 workflow EXOME_CNV {
-    BUILD_BWA_INDEX(ref_fasta)
-    EXTRACT_READS(bam_files_ch,region_file_ch)
-    BAM_TO_FASTQ(EXTRACT_READS.out.extracted_bams_ch)
-    REALIGN_FASTQ(BAM_TO_FASTQ.out.fastq_ch,ref_fasta,BUILD_BWA_INDEX.out.bwa_index_ch)
-    CALL_VARIANTS_MUTSERVE(REALIGN_FASTQ.out.realigned_ch.collect(),ref_fasta,contig)
-    CALCULATE_PERFORMANCE(CALL_VARIANTS_MUTSERVE.out.variants_ch,gold_standard,mutserve_performance_java)
+    BUILD_BWA_INDEX ( ref_fasta )
+    EXTRACT_READS ( bam_files_ch,region_file_ch )
+    BAM_TO_FASTQ ( EXTRACT_READS.out.extracted_bams_ch )
+    REALIGN_FASTQ ( BAM_TO_FASTQ.out.fastq_ch,ref_fasta,BUILD_BWA_INDEX.out.bwa_index_ch )
+    CALL_VARIANTS_MUTSERVE ( REALIGN_FASTQ.out.realigned_ch.collect(),ref_fasta,contig )
+    CALCULATE_PERFORMANCE ( CALL_VARIANTS_MUTSERVE.out.variants_ch,gold_standard,mutserve_performance_java )
 }
