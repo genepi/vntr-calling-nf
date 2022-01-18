@@ -1,6 +1,6 @@
 # CNV Exome
 
-> Decipher CNVs in NGS short-read data. 
+> Decipher CNVs in NGS short-read data.
 
 
 ## Quick Start
@@ -22,7 +22,7 @@ nextflow run genepi/exome-cnv-nf -c <nextflow.config> -r v0.0.2 -profile <docker
 ## Development
 
 ```
-docker build -t genepi/lpa-exome . # don't ingore the dot here
+docker build -t genepi/exome-cnv-nf . # don't ingore the dot here
 nextflow run main.nf -profile test,development
 ```
 
