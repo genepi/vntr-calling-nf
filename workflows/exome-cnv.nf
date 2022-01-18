@@ -44,6 +44,7 @@ include { BAM_TO_FASTQ          } from '../modules/local/bam_to_fastq'
 include { REALIGN_FASTQ         } from '../modules/local/realign_fastq'
 include { CALL_VARIANTS_MUTSERVE} from '../modules/local/call_variants_mutserve'
 include { CALL_VARIANTS_DEEPVARIANT} from '../modules/local/call_variants_deepvariant'
+include { CALL_VARIANTS_FREEBAYES} from '../modules/local/call_variants_freebayes'
 include { CALCULATE_PERFORMANCE } from '../modules/local/calculate_performance'
 
 
@@ -54,5 +55,6 @@ workflow EXOME_CNV {
     REALIGN_FASTQ ( BAM_TO_FASTQ.out.fastq_ch,ref_fasta,BUILD_BWA_INDEX.out.bwa_index_ch )
     CALL_VARIANTS_MUTSERVE ( REALIGN_FASTQ.out.realigned_ch.collect(),ref_fasta,contig )
     CALL_VARIANTS_DEEPVARIANT ( REALIGN_FASTQ.out.realigned_ch,ref_fasta, ref_fasta_fai )
+    CALL_VARIANTS_FREEBAYES ( REALIGN_FASTQ.out.realigned_ch.collect(),ref_fasta, ref_fasta_fai )
     CALCULATE_PERFORMANCE ( CALL_VARIANTS_MUTSERVE.out.variants_ch,gold_standard,mutserve_performance_java )
 }
