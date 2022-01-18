@@ -1,4 +1,4 @@
-process CALL_VARIANTS {
+process CALL_VARIANTS_MUTSERVE {
   publishDir "${params.output}", mode: "copy"
   input:
 	   path bamFile
