@@ -39,7 +39,7 @@ public class MutservePerformance implements Callable<Integer> {
 	public void setOutput(String output) {
 		this.output = output;
 	}
-	
+
 	public void setGold(String gold) {
 		this.gold = gold;
 	}
@@ -52,10 +52,10 @@ public class MutservePerformance implements Callable<Integer> {
 		assert (output != null);
 
 		CsvTableWriter writer = new CsvTableWriter(new File(output).getAbsolutePath(), '\t', false);
-		
-		String[] columnsWrite = { "ID", "Precision", "Sensitivity", "Specificity" , "#FP", " #FN", "FP", "FN"  };
+
+		String[] columnsWrite = { "ID", "Precision", "Sensitivity", "Specificity" , "F1-Score", "#FP", " #FN", "FP", "FN"  };
 		writer.setColumns(columnsWrite);
-		
+
 		final String pos = "Pos";
 		final String sampleId = "ID";
 
@@ -175,21 +175,25 @@ public class MutservePerformance implements Callable<Integer> {
 			double spec = trueNegativeCount / (double) (falsePositiveCount + trueNegativeCount) * 100;
 			double prec = truePositiveCount / (double) (truePositiveCount + falsePositiveCount) * 100;
 
+			double f1 =  (2 * prec * sens) / (prec + sens);
+
 			df.setMinimumFractionDigits(2);
 			df.setMaximumFractionDigits(3);
 
 			String sensFinal = df.format(sens);
 			String specFinal = df.format(spec);
 			String precFinal = df.format(prec);
+			String f1Final = df.format(f1);
 
 			writer.setString(0, id);
 			writer.setString(1, precFinal);
 			writer.setString(2, sensFinal);
 			writer.setString(3, specFinal);
-			writer.setInteger(4, falsePositiveCount);
-			writer.setInteger(5, falseNegativeCount);
-			writer.setString(6, falsePositives.toString());
-			writer.setString(7, falseNegatives.toString());
+			writer.setString(4, f1Final);
+			writer.setInteger(5, falsePositiveCount);
+			writer.setInteger(6, falseNegativeCount);
+			writer.setString(7, falsePositives.toString());
+			writer.setString(8, falseNegatives.toString());
 			writer.next();
 		}
 		writer.close();
