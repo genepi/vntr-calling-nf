@@ -30,8 +30,6 @@ public class PatternSearch implements Callable<Integer> {
 
 	public Integer call() throws Exception {
 
-		System.out.println(" files added.");
-
 		if (input.size() == 1 && new File(input.get(0)).isDirectory()) {
 			int count = 0;
 			for (File f : new File(input.get(0)).listFiles()) {
@@ -45,7 +43,6 @@ public class PatternSearch implements Callable<Integer> {
 			input.remove(0);
 		}
 
-System.out.println("XXX + " + input);		
 		String[] splits = pattern.split(",");
 
 		CsvTableWriter writer = new CsvTableWriter(new File(output).getAbsolutePath(), '\t', false);
@@ -56,7 +53,6 @@ System.out.println("XXX + " + input);
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 
 		for (String name : input) {
-                         System.out.println("XXX + " + input);
 
 			LineReader reader = new LineReader(name);
 			int count = 0;
