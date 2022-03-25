@@ -1,4 +1,5 @@
 process EXTRACT_READS {
+    publishDir "${params.output}/extracted_bams", mode: "copy"
   input:
 	  path bamFile
 		path regionFile
