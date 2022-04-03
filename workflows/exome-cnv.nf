@@ -11,7 +11,7 @@ params.threads = (Runtime.runtime.availableProcessors() - 1)
 params.output="output"
 
 bam_files_ch = Channel.fromPath(params.input)
-region_file_ch = file(params.region)
+//region_file_ch = file(params.region)
 ref_fasta = file(params.reference)
 ref_fasta_fai = file(params.reference_fai)
 gold_standard = file(params.gold)
