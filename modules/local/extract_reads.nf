@@ -1,7 +1,7 @@
 process EXTRACT_READS {
+    publishDir "${params.output}/extracted_bams", mode: "copy"
   input:
-	  path bamFile
-		path regionFile
+  tuple val(bamFile), path(regionFile)
   output:
 	  path "*.extracted.bam", emit: extracted_bams_ch
 	"""
