@@ -62,7 +62,7 @@ public class PatternSearch implements Callable<Integer> {
 			}
 		}
 
-		writer.write(new File(input).getName() + "\t" + count);
+		writer.write(new File(input).getName() + "\t" + count + "\n");
 		reader.close();
 
 		StringBuilder stringBuilder = new StringBuilder();
