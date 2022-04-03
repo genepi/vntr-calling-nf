@@ -89,7 +89,7 @@ public class PatternSearch implements Callable<Integer> {
 
 			StringBuilder stringBuilder = new StringBuilder();
 
-			if (countTotal > 0 && (count / countTotal) > 0.01) {
+			if (count > 100) {
 				if (build.equals("hg19")) {
 					stringBuilder.append(KIV2B_HG37);
 				} else {
