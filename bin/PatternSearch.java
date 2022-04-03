@@ -6,10 +6,7 @@
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.Callable;
-import genepi.io.table.writer.CsvTableWriter;
 import genepi.io.text.LineReader;
 import genepi.io.text.LineWriter;
 import picocli.CommandLine;
@@ -26,7 +23,7 @@ public class PatternSearch implements Callable<Integer> {
 	private static final String NON_KIV2B_HG38 = "chr6\t160612931\t160633751\tLPA_422_6;LPA_421_3\n"
 			+ "chr6	160635024	160645586	LPA_422_2+100bp;LPA_421_1+580bp";
 
-	// TODO ask silvia for correct coordinates
+	// coordinates taken from UKBB download
 	private static final String KIV2B_HG38 = "chr6\t160612753\t160645586";
 
 	@Parameters(description = "FASTQ files")
