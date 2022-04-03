@@ -28,8 +28,7 @@ lpa_region = file("$baseDir/bin/lpa_hg38.bed", checkIfExists: true)
 
 requiredParams = [
     'project', 'input',
-    'gold', 'region',
-    'reference', 'contig', 'build'
+    'gold', 'reference', 'contig', 'build'
 ]
 
 for (param in requiredParams) {
