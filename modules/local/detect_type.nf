@@ -9,7 +9,7 @@ publishDir "$params.output", mode: 'copy'
 
   output:
   path "${bamFile.baseName}-pattern.txt", emit: detected_pattern
-  tuple path(bamFile), path("${bamFile.baseName}.bed"), emit: bam_bed_ch
+  tuple file("${bamFile.baseName}.extracted.bam"), path("${bamFile.baseName}.bed"), emit: bam_bed_ch
   """
   samtools view -h -L ${lpaRegion} ${bamFile} | awk '\$5 < ${params.reads_quality_limit} || \$1 ~ "^@"' | samtools view -hb - | samtools sort -n -o ${bamFile.baseName}.extracted.bam -
   bedtools bamtofastq -i ${bamFile.baseName}.extracted.bam -fq ${bamFile.baseName}.fastq
