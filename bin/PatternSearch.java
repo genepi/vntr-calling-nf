@@ -3,13 +3,9 @@
 //DEPS info.picocli:picocli:4.6.1
 //DEPS genepi:genepi-io:1.1.1
 
-<<<<<<< HEAD
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-=======
-import java.io.File;
->>>>>>> 2f0cf52ad6e28a4faf6fa69c9f346617e956b467
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -21,7 +17,6 @@ import picocli.CommandLine.Parameters;
 
 public class PatternSearch implements Callable<Integer> {
 
-<<<<<<< HEAD
 	private static final String NON_KIV2B_HG37 = "chr6\t161033963\t161054783\tLPA_422_6;LPA_421_3\n"
 			+ "chr6\t161056056\t161066618\tLPA_422_2+100bp;LPA_421_1+580bp";
 
@@ -33,15 +28,12 @@ public class PatternSearch implements Callable<Integer> {
 	// TODO ask silvia for correct coordinates
 	private static final String KIV2B_HG38 = "chr6\t160612753\t160645586";
 
-=======
->>>>>>> 2f0cf52ad6e28a4faf6fa69c9f346617e956b467
 	@Parameters(description = "FASTQ files")
 	List<String> input;
 
 	@Option(names = "--output", description = "Summary ", required = true)
 	private String output;
 
-<<<<<<< HEAD
 	@Option(names = "--output-bed", description = "Summary ", required = true)
 	private String outputBed;
 
@@ -51,11 +43,6 @@ public class PatternSearch implements Callable<Integer> {
 	@Option(names = "--build", description = "hg19/hg38 ", required = true)
 	private String build;
 
-=======
-	@Option(names = "--pattern", description = "Pattern to search for ", required = true)
-	private String pattern;
-
->>>>>>> 2f0cf52ad6e28a4faf6fa69c9f346617e956b467
 	public void setOutput(String output) {
 		this.output = output;
 	}
@@ -63,23 +50,11 @@ public class PatternSearch implements Callable<Integer> {
 	public Integer call() throws Exception {
 
 		if (input.size() == 1 && new File(input.get(0)).isDirectory()) {
-<<<<<<< HEAD
 			for (File f : new File(input.get(0)).listFiles()) {
 				if (f.getName().endsWith("fastq")) {
 					input.add(f.getAbsolutePath());
 				}
 			}
-=======
-			int count = 0;
-			for (File f : new File(input.get(0)).listFiles()) {
-				if (f.getName().endsWith("fastq")) {
-					input.add(f.getAbsolutePath());
-					System.out.println(count);
-					count++;
-				}
-			}
-			System.out.println(count + " files added.");
->>>>>>> 2f0cf52ad6e28a4faf6fa69c9f346617e956b467
 			input.remove(0);
 		}
 
@@ -96,13 +71,9 @@ public class PatternSearch implements Callable<Integer> {
 
 			LineReader reader = new LineReader(name);
 			int count = 0;
-<<<<<<< HEAD
 			int countTotal = 0;
 			while (reader.next()) {
 				countTotal++;
-=======
-			while (reader.next()) {
->>>>>>> 2f0cf52ad6e28a4faf6fa69c9f346617e956b467
 				String line = reader.get();
 				for (String split : splits) {
 					if (line.contains(split)) {
@@ -115,7 +86,6 @@ public class PatternSearch implements Callable<Integer> {
 			writer.next();
 			reader.close();
 			map.put(name, count);
-<<<<<<< HEAD
 
 			StringBuilder stringBuilder = new StringBuilder();
 
@@ -140,12 +110,6 @@ public class PatternSearch implements Callable<Integer> {
 			writerBed.close();
 		}
 
-=======
-		}
-
-		writer.close();
-
->>>>>>> 2f0cf52ad6e28a4faf6fa69c9f346617e956b467
 		return 0;
 	}
 
