@@ -1,5 +1,5 @@
 process BAM_TO_FASTQ {
-    publishDir "${params.output}", mode: "copy"
+    publishDir "${params.outdir}/fastq", mode: "copy"
   input:
 	  path bamFile
   output:

@@ -1,6 +1,6 @@
 process CALCULATE_PERFORMANCE {
 
-publishDir "$params.output", mode: 'copy'
+publishDir "${params.outdir}/final", mode: 'copy'
 
   input:
   path mutserve_file

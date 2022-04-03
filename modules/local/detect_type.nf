@@ -1,6 +1,6 @@
 process DETECT_TYPE {
 
-publishDir "$params.output", mode: 'copy'
+  publishDir "${params.outdir}/pattern", mode: 'copy', pattern: '*pattern.txt'
 
   input:
   path pattern_search_java
