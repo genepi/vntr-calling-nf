@@ -19,12 +19,17 @@ contig = file(params.contig)
 
 mutserve_performance_java = "$baseDir/bin/MutservePerformance.java"
 pattern_search_java = "$baseDir/bin/PatternSearch.java"
-lpa_region = file("$baseDir/bin/lpa_hg37.bed", checkIfExists: true)
+
+if(params.build == "hg19") {
+lpa_region = file("$baseDir/bin/lpa_hg19.bed", checkIfExists: true)
+} else if (params.build == "hg38") {
+lpa_region = file("$baseDir/bin/lpa_hg38.bed", checkIfExists: true)
+}
 
 requiredParams = [
     'project', 'input',
     'gold', 'region',
-    'reference', 'contig'
+    'reference', 'contig', 'build'
 ]
 
 for (param in requiredParams) {
@@ -40,14 +45,14 @@ if(params.outdir == null) {
 }
 
 include { BUILD_BWA_INDEX       } from '../modules/local/build_bwa_index'
-include { DETECT_TYPE           } from '../modules/local/detect_type'
-include { EXTRACT_READS         } from '../modules/local/extract_reads'
-include { BAM_TO_FASTQ          } from '../modules/local/bam_to_fastq'
-include { REALIGN_FASTQ         } from '../modules/local/realign_fastq'
-include { CALL_VARIANTS_MUTSERVE} from '../modules/local/call_variants_mutserve'
-include { CALL_VARIANTS_DEEPVARIANT} from '../modules/local/call_variants_deepvariant'
-include { CALL_VARIANTS_FREEBAYES} from '../modules/local/call_variants_freebayes'
-include { CALCULATE_PERFORMANCE } from '../modules/local/calculate_performance'
+include { DETECT_TYPE           } from '../modules/local/detect_type'  addParams(outdir: "$outdir")
+include { EXTRACT_READS         } from '../modules/local/extract_reads'  addParams(outdir: "$outdir")
+include { BAM_TO_FASTQ          } from '../modules/local/bam_to_fastq'  addParams(outdir: "$outdir")
+include { REALIGN_FASTQ         } from '../modules/local/realign_fastq'  addParams(outdir: "$outdir")
+include { CALL_VARIANTS_MUTSERVE} from '../modules/local/call_variants_mutserve'  addParams(outdir: "$outdir")
+include { CALL_VARIANTS_DEEPVARIANT} from '../modules/local/call_variants_deepvariant'  addParams(outdir: "$outdir")
+include { CALL_VARIANTS_FREEBAYES} from '../modules/local/call_variants_freebayes'  addParams(outdir: "$outdir")
+include { CALCULATE_PERFORMANCE } from '../modules/local/calculate_performance'  addParams(outdir: "$outdir")
 
 
 workflow EXOME_CNV {

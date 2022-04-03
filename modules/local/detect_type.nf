@@ -11,7 +11,7 @@ process DETECT_TYPE {
   path "${bamFile.baseName}-pattern.txt", emit: detected_pattern
   tuple file("${bamFile.baseName}.extracted.bam"), path("${bamFile.baseName}.bed"), emit: bam_bed_ch
   """
-  samtools view -h -L ${lpaRegion} ${bamFile} | awk '\$5 < ${params.reads_quality_limit} || \$1 ~ "^@"' | samtools view -hb - | samtools sort -n -o ${bamFile.baseName}.extracted.bam -
+  samtools view -h -L ${lpaRegion} ${bamFile} -o ${bamFile.baseName}.extracted.bam
   bedtools bamtofastq -i ${bamFile.baseName}.extracted.bam -fq ${bamFile.baseName}.fastq
   export JBANG_CACHE_DIR=. && jbang ${pattern_search_java} ${bamFile.baseName}.fastq --output ${bamFile.baseName}-pattern.txt --output-bed ${bamFile.baseName}.bed --pattern CCACTGTCACTGGAA,TTCCAGTGACAGTGG --build ${params.build}
 """
