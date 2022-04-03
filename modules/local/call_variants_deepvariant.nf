@@ -1,5 +1,5 @@
 process CALL_VARIANTS_DEEPVARIANT {
-  publishDir "${params.output}/deepvariant", mode: "copy"
+  publishDir "${params.outdir}/final/deepvariant", mode: "copy"
   container 'google/deepvariant:1.3.0'
 
   input:

@@ -1,5 +1,5 @@
 process CALL_VARIANTS_FREEBAYES {
-  publishDir "${params.output}/freebayes", mode: "copy"
+  publishDir "${params.outdir}/final/freebayes", mode: "copy"
 
   input:
 	   path bamFiles

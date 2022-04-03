@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import genepi.io.table.writer.CsvTableWriter;
 import genepi.io.text.LineReader;
+import genepi.io.text.LineWriter;
 import picocli.CommandLine;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
@@ -29,7 +30,7 @@ public class PatternSearch implements Callable<Integer> {
 	private static final String KIV2B_HG38 = "chr6\t160612753\t160645586";
 
 	@Parameters(description = "FASTQ files")
-	List<String> input;
+	String input;
 
 	@Option(names = "--output", description = "Summary ", required = true)
 	private String output;
@@ -49,66 +50,45 @@ public class PatternSearch implements Callable<Integer> {
 
 	public Integer call() throws Exception {
 
-		if (input.size() == 1 && new File(input.get(0)).isDirectory()) {
-			for (File f : new File(input.get(0)).listFiles()) {
-				if (f.getName().endsWith("fastq")) {
-					input.add(f.getAbsolutePath());
-				}
-			}
-			input.remove(0);
-		}
-
 		String[] splits = pattern.split(",");
 
-		CsvTableWriter writer = new CsvTableWriter(new File(output).getAbsolutePath(), '\t', false);
+		LineWriter writer = new LineWriter(new File(output).getAbsolutePath());
 
-		String[] columnsWrite = { "name", "count" };
-		writer.setColumns(columnsWrite);
-
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
-
-		for (String name : input) {
-
-			LineReader reader = new LineReader(name);
-			int count = 0;
-			int countTotal = 0;
-			while (reader.next()) {
-				countTotal++;
-				String line = reader.get();
-				for (String split : splits) {
-					if (line.contains(split)) {
-						count++;
-					}
+		LineReader reader = new LineReader(input);
+		int count = 0;
+		while (reader.next()) {
+			String line = reader.get();
+			for (String split : splits) {
+				if (line.contains(split)) {
+					count++;
 				}
 			}
-			writer.setString("name", new File(name).getName());
-			writer.setInteger("count", count);
-			writer.next();
-			reader.close();
-			map.put(name, count);
-
-			StringBuilder stringBuilder = new StringBuilder();
-
-			if (count > 100) {
-				if (build.equals("hg19")) {
-					stringBuilder.append(KIV2B_HG37);
-				} else {
-					stringBuilder.append(KIV2B_HG38);
-				}
-			} else {
-				if (build.equals("hg19")) {
-					stringBuilder.append(NON_KIV2B_HG37);
-				} else {
-					stringBuilder.append(NON_KIV2B_HG38);
-				}
-			}
-
-			writer.close();
-
-			BufferedWriter writerBed = new BufferedWriter(new FileWriter(outputBed));
-			writerBed.write(stringBuilder.toString());
-			writerBed.close();
 		}
+
+		writer.write(new File(input).getName() + "\t" + count);
+		reader.close();
+
+		StringBuilder stringBuilder = new StringBuilder();
+
+		if (count > 100) {
+			if (build.equals("hg19")) {
+				stringBuilder.append(KIV2B_HG37);
+			} else {
+				stringBuilder.append(KIV2B_HG38);
+			}
+		} else {
+			if (build.equals("hg19")) {
+				stringBuilder.append(NON_KIV2B_HG37);
+			} else {
+				stringBuilder.append(NON_KIV2B_HG38);
+			}
+		}
+
+		BufferedWriter writerBed = new BufferedWriter(new FileWriter(outputBed));
+		writerBed.write(stringBuilder.toString());
+		writerBed.close();
+
+		writer.close();
 
 		return 0;
 	}
