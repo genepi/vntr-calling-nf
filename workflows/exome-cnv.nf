@@ -18,7 +18,7 @@ gold_standard = file(params.gold)
 contig = file(params.contig)
 
 mutserve_performance_java = "$baseDir/bin/MutservePerformance.java"
-pattern_search_java = "$baseDir/bin/PatternSearch.java"
+pattern_search_java  = file("$baseDir/bin/PatternSearch.java", checkIfExists: true)
 
 if(params.build == "hg19") {
 lpa_region = file("$baseDir/bin/lpa_hg19.bed", checkIfExists: true)
@@ -43,6 +43,7 @@ if(params.outdir == null) {
   outdir = params.outdir
 }
 
+include { CACHE_JBANG_SCRIPTS         } from '../modules/local/cache_jbang_scripts'
 include { BUILD_BWA_INDEX       } from '../modules/local/build_bwa_index'
 include { DETECT_TYPE           } from '../modules/local/detect_type'  addParams(outdir: "$outdir")
 include { EXTRACT_READS         } from '../modules/local/extract_reads'  addParams(outdir: "$outdir")
@@ -55,13 +56,15 @@ include { CALCULATE_PERFORMANCE } from '../modules/local/calculate_performance' 
 
 
 workflow EXOME_CNV {
+
+  CACHE_JBANG_SCRIPTS (pattern_search_java )
     BUILD_BWA_INDEX ( ref_fasta )
-    DETECT_TYPE ( pattern_search_java, bam_files_ch, lpa_region )
+    DETECT_TYPE ( CACHE_JBANG_SCRIPTS.out.regenie_pattern_search_jar, bam_files_ch, lpa_region )
     EXTRACT_READS ( DETECT_TYPE.out.bam_bed_ch )
     BAM_TO_FASTQ ( EXTRACT_READS.out.extracted_bams_ch )
     REALIGN_FASTQ ( BAM_TO_FASTQ.out.fastq_ch,ref_fasta,BUILD_BWA_INDEX.out.bwa_index_ch )
     CALL_VARIANTS_MUTSERVE ( REALIGN_FASTQ.out.realigned_ch.collect(),ref_fasta, contig )
     //CALL_VARIANTS_DEEPVARIANT ( REALIGN_FASTQ.out.realigned_ch,ref_fasta, ref_fasta_fai )
     //CALL_VARIANTS_FREEBAYES ( REALIGN_FASTQ.out.realigned_ch.collect(),ref_fasta, ref_fasta_fai )
-    CALCULATE_PERFORMANCE ( CALL_VARIANTS_MUTSERVE.out.variants_ch,gold_standard,mutserve_performance_java )
+    //CALCULATE_PERFORMANCE ( CALL_VARIANTS_MUTSERVE.out.variants_ch,gold_standard,mutserve_performance_java )
 }
