@@ -7,7 +7,7 @@ process REALIGN_FASTQ {
   output:
 	  path "*.kiv2.realigned.bam", emit: realigned_ch
 	"""
-	bwa mem -M ${ref_fasta} -R "@RG\\tID:LPA-exome-${baseName}\\tSM:${baseName}\\tPL:ILLUMINA" ${r1_fastq} ${r2_fastq} | samtools sort -@ 15 -o ${baseName}.kiv2.realigned.bam -
+	bwa mem -M ${ref_fasta} -R "@RG\\tID:LPA-exome-${baseName}\\tSM:${baseName}\\tPL:ILLUMINA" ${r1_fastq} ${r2_fastq} | samtools sort -o ${baseName}.kiv2.realigned.bam -
 
 	"""
 }
