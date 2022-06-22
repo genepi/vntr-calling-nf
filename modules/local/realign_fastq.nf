@@ -1,5 +1,7 @@
 process REALIGN_FASTQ {
+
   publishDir "${params.outdir}/realigned", mode: "copy"
+
   input:
 	   tuple val(baseName), path(r1_fastq), path(r2_fastq)
 		 path ref_fasta
