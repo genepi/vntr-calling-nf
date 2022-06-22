@@ -1,5 +1,4 @@
 process EXTRACT_READS {
-  //publishDir "${params.outdir}/extracted_bams", mode: "copy"
   input:
   tuple val(bamFile), path(regionFile)
   output:

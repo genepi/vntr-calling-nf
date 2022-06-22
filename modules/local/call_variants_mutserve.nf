@@ -1,5 +1,5 @@
 process CALL_VARIANTS_MUTSERVE {
-  publishDir "${params.outdir}/final/", mode: "copy"
+  publishDir "${params.outdir}/mutserve", mode: "copy"
   input:
 	   path bamFile
 		 path ref_fasta
