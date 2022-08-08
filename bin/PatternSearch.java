@@ -19,10 +19,9 @@ public class PatternSearch implements Callable<Integer> {
 
 	private static final String KIV2B_HG37 = "chr6\t161033785\t161066618";
 
-	private static final String NON_KIV2B_HG38 = "chr6\t160612931\t160633751\tLPA_422_6;LPA_421_3\n"
-			+ "chr6	160635024	160645586	LPA_422_2+100bp;LPA_421_1+580bp";
+	private static final String NON_KIV2B_HG38 = "chr6\t160612753\t160633751\tLPA_422_6;LPA_421_3\n"
+			+ "chr6\t160635024\t160645586\tLPA_422_2+100bp;LPA_421_1+580bp";
 
-	// coordinates taken from UKBB download
 	private static final String KIV2B_HG38 = "chr6\t160612753\t160645586";
 
 	@Parameters(description = "FASTQ files")
