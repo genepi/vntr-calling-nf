@@ -8,6 +8,6 @@ process CALL_VARIANTS_MUTSERVE {
 	  path "${params.project}.txt", emit: variants_ch
     path "${params.project}_raw.txt", emit: variants_raw_ch
 	"""
-	mutserve call --output ${params.project}.vcf --write-raw --reference ${ref_fasta} --level ${params.mutserve_detection_limit} --deletions --contig-name ${contig} ${bamFile} --no-ansi
+	mutserve call --output ${params.project}.vcf --write-raw --reference ${ref_fasta} --level ${params.mutserve_detection_limit} --deletions --baseQ ${params.mutserve_baseQ} --mapQ ${params.mutserve_mapQ} --alignQ ${params.mutserve_alignQ} --contig-name ${contig} ${bamFile} --no-ansi
 	"""
 }
