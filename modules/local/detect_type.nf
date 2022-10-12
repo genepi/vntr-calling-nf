@@ -1,18 +1,19 @@
 process DETECT_TYPE {
-
-  //publishDir "${params.outdir}/pattern", mode: 'copy', pattern: '*pattern.txt'
+  cpus 3
 
   input:
-  path bamFile
-  path lpaRegion
+    path bamFile
+    path lpaRegion
 
   output:
-  path "${bamFile.baseName}-pattern.txt", emit: detected_pattern
-  tuple file("${bamFile.baseName}.extracted.bam"), path("${bamFile.baseName}.bed"), emit: bam_bed_ch
+    path "${bamFile.baseName}-pattern.txt", emit: detected_pattern
+    path "${bamFile.baseName}.fastq"
+    tuple file("${bamFile.baseName}.extracted.bam"), path("${bamFile.baseName}.bed"), emit: bam_bed_ch
+
   """
   samtools view -h -L ${lpaRegion} ${bamFile} -o ${bamFile.baseName}.extracted.bam
-  bedtools bamtofastq -i ${bamFile.baseName}.extracted.bam -fq ${bamFile.baseName}.fastq
-  java -jar /opt/PatternSearch.jar ${bamFile.baseName}.fastq --output ${bamFile.baseName}-pattern.txt --output-bed ${bamFile.baseName}.bed --pattern CCACTGTCACTGGAA,TTCCAGTGACAGTGG --build ${params.build}
-"""
+  samtools fastq ${bamFile.baseName}.extracted.bam > ${bamFile.baseName}.fastq
+  java -jar /opt/PatternSearch.jar ${bamFile.baseName}.fastq --output ${bamFile.baseName}-pattern.txt --output-bed ${bamFile.baseName}.bed --splitValue ${params.signature_split_value} --pattern CCACTGTCACTGGAA,TTCCAGTGACAGTGG --build ${params.build}
+  """
 
 }
