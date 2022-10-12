@@ -6,8 +6,7 @@ channels:
   - bioconda
   - conda-forge
 dependencies:
-  - samtools=1.13
-  - bedtools=2.30.0
+  - samtools=1.16.1
   - bwa=0.7.17
   - openjdk=11.0.9
   - unzip
