@@ -1,13 +1,12 @@
 process DETECT_TYPE {
   cpus 3
-
+  publishDir "${params.outdir}/pattern", mode: "copy", pattern: '*pattern.txt'
   input:
     path bamFile
     path lpaRegion
 
   output:
     path "${bamFile.baseName}-pattern.txt", emit: detected_pattern
-    path "${bamFile.baseName}.fastq"
     tuple file("${bamFile.baseName}.extracted.bam"), path("${bamFile.baseName}.bed"), emit: bam_bed_ch
 
   """
