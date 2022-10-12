@@ -36,8 +36,11 @@ public class PatternSearch implements Callable<Integer> {
 	@Option(names = "--pattern", description = "Pattern to search for ", required = true)
 	private String pattern;
 
-	@Option(names = "--build", description = "hg19/hg38 ", required = true)
+	@Option(names = "--build", description = "hg19/hg38", required = true)
 	private String build;
+
+	@Option(names = "--splitValue", description = "KIV2B vs nonKIV2B", required = true)
+	private int splitValue;
 
 	public void setOutput(String output) {
 		this.output = output;
@@ -65,7 +68,7 @@ public class PatternSearch implements Callable<Integer> {
 
 		StringBuilder stringBuilder = new StringBuilder();
 
-		if (count > 100) {
+		if (count > splitValue) {
 			if (build.equals("hg19")) {
 				stringBuilder.append(KIV2B_HG37);
 			} else {
