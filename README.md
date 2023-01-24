@@ -1,4 +1,4 @@
-# Resolving VNTRs in Whole-exome sequencing data
+# Resolving VNTRs from whole-exome sequencing data
 
 ## About
 An automated DSL2 Nextflow pipeline to resolve VNTRs (large variable number tandem repeats) from whole-exome sequencing data in BAM format. 
