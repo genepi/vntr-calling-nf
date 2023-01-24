@@ -52,8 +52,17 @@ include { CALCULATE_PERFORMANCE } from '../modules/local/calculate_performance' 
 workflow EXOME_CNV {
 
     BUILD_BWA_INDEX ( ref_fasta )
+    if (params.region == null){
+      println("auto")
     DETECT_TYPE ( bam_files_ch, lpa_region )
-    EXTRACT_READS ( DETECT_TYPE.out.bam_bed_ch )
+    bam_bed_tuple = DETECT_TYPE.out.bam_bed_ch
+    } else {
+      println("manuell")
+      bam_files_ch.map { it -> [it, file(params.region)] }
+           .set { bam_bed_tuple }
+    }
+
+    EXTRACT_READS ( bam_bed_tuple )
     BAM_TO_FASTQ ( EXTRACT_READS.out.extracted_bams_ch )
     REALIGN_FASTQ ( BAM_TO_FASTQ.out.fastq_ch,ref_fasta,BUILD_BWA_INDEX.out.bwa_index_ch )
     CALL_VARIANTS_MUTSERVE ( REALIGN_FASTQ.out.realigned_ch.collect(),ref_fasta, contig )
