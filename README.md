@@ -1,6 +1,16 @@
-# CNV Exome
+# Resolving VNTRs in Whole-exome sequencing data
 
-> Decipher CNVs in NGS short-read data.
+## About
+An automated DSL2 Nextflow pipeline to resolve VNTRs (large variable number tandem repeats) from whole-exome sequencing data in BAM format. 
+
+## Pipeline Steps
+* Build BWA Index on the reference genome
+* Detect KIV2 LPA type 
+* Extract reads from the LPA region
+* Convert region to FASTQ
+* Realign region to a single repeat
+* Call variants using mutserve
+* Calculate F1-score performance (optional) 
 
 
 ## Quick Start
@@ -10,13 +20,13 @@
 2) Run the pipeline on a test dataset
 
 ```
-nextflow run genepi/exome-cnv-nf -r v0.0.2 -profile test,<docker,singularity>
+nextflow run genepi/exome-cnv-nf -r v0.3.2 -profile test,<docker,singularity>
 ```
 
 3) Run the pipeline on your data
 
 ```
-nextflow run genepi/exome-cnv-nf -c <nextflow.config> -r v0.0.2 -profile <docker,singularity>
+nextflow run genepi/exome-cnv-nf -c <nextflow.config> -r v0.3.2 -profile <docker,singularity>
 ```
 
 ## Development
@@ -27,4 +37,4 @@ nextflow run main.nf -profile test,development
 ```
 
 ## License
-LPA Exome is MIT Licensed.
+The pipeline is MIT Licensed.
