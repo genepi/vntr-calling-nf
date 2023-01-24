@@ -1,7 +1,7 @@
-# Resolving VNTRs from whole-exome sequencing data
+# Resolving VNTRs from whole-exome sequencing (WES) data
 
 ## About
-An automated DSL2 Nextflow pipeline to resolve VNTRs (large variable number tandem repeats) from whole-exome sequencing data in BAM format. 
+An automated DSL2 Nextflow pipeline to resolve VNTRs (large variable number tandem repeats) from whole-exome sequencing data in BAM format. We tested and validated the WES pipeline on a gold-standard dataset with known KIV-2 variant patterns and benchmarked it by applying it to the 200K UK Biobank WES dataset. 
 
 ## Pipeline Steps
 * Build BWA Index on the reference genome
