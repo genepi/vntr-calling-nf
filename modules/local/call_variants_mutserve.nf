@@ -4,7 +4,7 @@ process CALL_VARIANTS_MUTSERVE {
   input:
     path bamFiles
     path ref_fasta
-    path contig
+    val(contig)
 
   output:
     path "${params.project}.txt", emit: variants_ch
