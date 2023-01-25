@@ -62,13 +62,13 @@ params.region="bed/hg37/2_JLR_strategy_hg19.bed"
 2) Run the pipeline on a test dataset
 
 ```
-nextflow run genepi/exome-cnv-nf -r v0.3.2 -profile test,<docker,singularity>
+nextflow run genepi/exome-cnv-nf -r v0.4.1 -profile test,<docker,singularity>
 ```
 
 3) Run the pipeline on your data
 
 ```
-nextflow run genepi/exome-cnv-nf -c <nextflow.config> -r v0.3.2 -profile <docker,singularity>
+nextflow run genepi/exome-cnv-nf -c <nextflow.config> -r v0.4.1 -profile <docker,singularity>
 ```
 
 ## Development
