@@ -1,13 +1,17 @@
 nextflow.enable.dsl = 2
 
 requiredParams = [
-    'project', 'input','reference', 'contig', 'build'
+    'project', 'input','reference', 'contig'
 ]
 
 for (param in requiredParams) {
     if (params[param] == null) {
       exit 1, "Parameter ${param} is required."
     }
+}
+
+if (params.region == null && params.build == null) {
+  exit 1, "Please specify build of your input data."
 }
 
 bam_files_ch = Channel.fromPath(params.input)
@@ -29,7 +33,7 @@ include { CALCULATE_PERFORMANCE } from '../modules/local/calculate_performance' 
 workflow EXOME_CNV {
 
     BUILD_BWA_INDEX ( ref_fasta )
-    
+
     // if no region is set, we apply our LPA-specific signature approach
     if (params.region == null){
       // load lpa region, concrecte bed file is then defined in DETECT_TYPE
