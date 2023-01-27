@@ -10,7 +10,7 @@
 
 nextflow.enable.dsl = 2
 
-include { EXOME_CNV } from './workflows/exome-cnv'
+include { EXOME_VNTR } from './workflows/exome-vntr'
 
 /*
 ========================================================================================
@@ -19,5 +19,5 @@ include { EXOME_CNV } from './workflows/exome-cnv'
 */
 
 workflow {
-    EXOME_CNV ()
+    EXOME_VNTR ()
 }
