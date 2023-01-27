@@ -12,13 +12,13 @@ The pipeline has been applied to the **LPA gene** (using a novel signature-seque
 2) Run the pipeline on a test dataset
 
 ```
-nextflow run genepi/exome-cnv-nf -r v0.4.3 -profile test,<docker,singularity>
+nextflow run genepi/exome-cnv-nf -r v0.4.4 -profile test,<docker,singularity>
 ```
 
 3) Run the pipeline on your data
 
 ```
-nextflow run genepi/exome-cnv-nf -c <nextflow.config> -r v0.4.3 -profile <docker,singularity>
+nextflow run genepi/exome-cnv-nf -c <nextflow.config> -r v0.4.4 -profile <docker,singularity>
 ```
 
 
