@@ -1,15 +1,15 @@
 # Resolving VNTRs from whole-exome sequencing (WES) data
 
 ## About
-This repository includes an automated DSL2 Nextflow pipeline to resolve VNTRs (large variable number tandem repeats) from whole-exome sequencing data in BAM format. 
+This repository includes an automated DSL2 Nextflow pipeline to resolve VNTRs (large variable number tandem repeats) from whole-exome sequencing data in BAM format.
 
 ## Implementation Details
 For the LPA gene, the workflow uses WES reads aligned to the complete reference genome as an input. First, the complete LPA region is extracted, converted to FASTQ, and screened for the KIV-2B signature sequence. KIV-2 reads are then extracted using a novel signature-sequence approach and remapped to a reference consisting of one single KIV-2 repeat. Using this approach, KIV-2 variants are naturally present only in a subset of reads like somatic mutations and are called using mutserve with settings optimized for low-level variant detection.
 
 
-We tested and validated the WES pipeline on a gold-standard dataset with known LPA KIV-2 variant patterns and benchmarked it by applying it to the 200K UK Biobank WES dataset. 
+We tested and validated the WES pipeline on a gold-standard dataset with known LPA KIV-2 variant patterns and benchmarked it by applying it to the 200K UK Biobank WES dataset.
 
-The pipeline has been applied to the **LPA gene** (using a novel signature-sequence approach) but can be used for **other similar VNTRs** by specifying a region for read extraction. 
+The pipeline has been applied to the **LPA gene** (using a novel signature-sequence approach) but can be used for **other similar VNTRs** by specifying a region for read extraction.
 
 
 ## Parameters
@@ -62,13 +62,13 @@ params.region="bed/hg37/2_JLR_strategy_hg19.bed"
 2) Run the pipeline on a test dataset
 
 ```
-nextflow run genepi/exome-cnv-nf -r v0.4.1 -profile test,<docker,singularity>
+nextflow run genepi/exome-cnv-nf -r v0.4.2 -profile test,<docker,singularity>
 ```
 
 3) Run the pipeline on your data
 
 ```
-nextflow run genepi/exome-cnv-nf -c <nextflow.config> -r v0.4.1 -profile <docker,singularity>
+nextflow run genepi/exome-cnv-nf -c <nextflow.config> -r v0.4.2 -profile <docker,singularity>
 ```
 
 ## Development
