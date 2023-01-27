@@ -22,7 +22,6 @@ nextflow run genepi/exome-cnv-nf -r v0.4.4 -profile test,<docker,singularity>
 nextflow run genepi/exome-cnv-nf -c <nextflow.config> -r v0.4.4 -profile <docker,singularity>
 ```
 
-
 ## Parameters
 ### Required Parameters
 | Tables        | Value           | Description  |
@@ -43,8 +42,10 @@ For the LPA gene, the workflow uses WES reads aligned to the complete reference 
 
 We tested and validated the WES pipeline on a gold-standard dataset with known LPA KIV-2 variant patterns and benchmarked it by applying it to the 200K UK Biobank WES dataset.
 
+## Regions Of Interests (ROIs)
+For LPA, we tested several read extraction strategies (ROI1-9), which can be found in this repository and are referenced in the paper. 
 
-### Pipeline Steps
+## Pipeline Steps
 * Build BWA Index on the reference genome
 * Detect KIV2 LPA type (LPA only)
 * Extract reads from the LPA region
