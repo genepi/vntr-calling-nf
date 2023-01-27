@@ -2,6 +2,7 @@
 
 ## About
 This repository includes an automated DSL2 Nextflow pipeline to resolve VNTRs (large variable number tandem repeats) from whole-exome sequencing data in BAM format.
+
 The pipeline has been applied to the **LPA gene** (using a novel signature-sequence approach) but can be used for **other similar VNTRs** by specifying a region for read extraction.
 
 
