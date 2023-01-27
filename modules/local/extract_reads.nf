@@ -2,7 +2,7 @@ process EXTRACT_READS {
   cpus 3
 
   input:
-    tuple val(bamFile), path(regionFile)
+    tuple path(bamFile), path(regionFile)
 
   output:
 	  path "*.extracted.bam", emit: extracted_bams_ch
