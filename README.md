@@ -43,7 +43,7 @@ For the LPA gene, the workflow uses WES reads aligned to the complete reference 
 We tested and validated the WES pipeline on a gold-standard dataset with known LPA KIV-2 variant patterns and benchmarked it by applying it to the 200K UK Biobank WES dataset.
 
 ## Regions Of Interests (ROIs)
-For LPA, we tested several read extraction strategies (ROI1-9), which can be found in this repository and are referenced in the paper. 
+For LPA, we tested several read extraction strategies (ROI-1 to ROI-9), which can be downloaded from [this repository](paper_data/bed) and are also referenced in the paper. 
 
 ## Pipeline Steps
 * Build BWA Index on the reference genome
