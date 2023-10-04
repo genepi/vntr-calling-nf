@@ -78,7 +78,7 @@ params.region="bed/hg37/2_JLR_strategy_hg19.bed"
 ## Development
 
 ```
-docker build -t genepi/exome-cnv-nf . # don't ingore the dot here
+docker build -t genepi/exome-vntr-nf . # don't ingore the dot here
 nextflow run main.nf -profile test,development
 ```
 
