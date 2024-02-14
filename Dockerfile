@@ -1,10 +1,22 @@
-FROM continuumio/miniconda
-MAINTAINER Sebastian Schoenherr <sebastian.schoenherr@i-med.ac.at>
+FROM ubuntu:22.04
+LABEL Sebastian Schoenherr <sebastian.schoenherr@i-med.ac.at>
+
+# Install compilers
+RUN apt-get update && \
+    apt-get install -y wget build-essential zlib1g-dev liblzma-dev libbz2-dev libxau-dev && \
+    apt-get -y clean
+
+#  Install miniconda
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-py39_23.9.0-0-Linux-x86_64.sh -O ~/miniconda.sh && \
+  /bin/bash ~/miniconda.sh -b -p /opt/conda
+ENV PATH=/opt/conda/bin:${PATH}
 
 COPY environment.yml .
 RUN \
    conda env update -n root -f environment.yml \
 && conda clean -a
+
+
 
 # Install mutserve
 RUN mkdir /opt/mutserve
