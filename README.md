@@ -73,7 +73,13 @@ params.contig="KIV2_6"
 params.region="bed/hg37/2_JLR_strategy_hg19.bed"
 ```
 
-
+## 1000 Genomes Phase 3 
+### Analysis
+For our analysis, we downloaded the [1000G Genomes WGS data mapped to hg38](https://www.internationalgenome.org/data-portal/data-collection/30x-grch38) to analyze 6 different VNTRs.
+For validation, we also downloaded the [1000G Genomes WES data mapped to hg38](https://www.internationalgenome.org/data-portal/data-collection/grch38) and compared it to the WGS data.  
+We filtered the data using the  [1000G Genomes samples list](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/integrated_call_samples_v3.20130502.ALL.panel). All scripts are available [here](paper_data/scripts).
+### Results
+Final VNTR data are available within this repository [here](paper_data/vntrs).
 
 ## Development
 
