@@ -10,7 +10,7 @@
 
 nextflow.enable.dsl = 2
 
-include { EXOME_VNTR } from './workflows/exome-vntr'
+include { VNTR_RESOLVER } from './workflows/vntr-resolver'
 
 /*
 ========================================================================================
@@ -19,5 +19,5 @@ include { EXOME_VNTR } from './workflows/exome-vntr'
 */
 
 workflow {
-    EXOME_VNTR ()
+    VNTR_RESOLVER ()
 }
