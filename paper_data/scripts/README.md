@@ -11,4 +11,4 @@ params.build="hg38"
 params.reference="reference-data/kiv2.fasta"
 params.contig="KIV2_6"
 ```
-* Run the pipeline: `nextflow run genepi/vntr-resolver-nf -r v0.4.5 -profile singularity -c 1000g-exome-signature.config`
+* Run the pipeline: `nextflow run genepi/vntr-resolver-nf -r v0.4.6 -profile singularity -c 1000g-exome-signature.config`
