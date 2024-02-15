@@ -1,4 +1,5 @@
 process CALL_VARIANTS_MUTSERVE {
+  
   publishDir "${params.outdir}/mutserve", mode: "copy"
 
   input:
@@ -29,6 +30,7 @@ process CALL_VARIANTS_MUTSERVE {
       --mapQ ${params.mutserve_mapQ} \
       --alignQ ${params.mutserve_alignQ} \
       --contig-name ${contig} \
+      --threads ${task.cpus} \
       --no-ansi \$PWD
 	"""
 }
