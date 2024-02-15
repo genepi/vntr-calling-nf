@@ -1,4 +1,5 @@
-# Resolving VNTRs from sequencing data
+# vntr-calling-nf: An approach to resolve variants within VNTRs from sequencing data
+
 ## About
 This repository includes an automated DSL2 Nextflow pipeline to resolve VNTRs (large variable number tandem repeats) from sequencing data in BAM format.
 
