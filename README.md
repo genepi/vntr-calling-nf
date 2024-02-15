@@ -1,9 +1,8 @@
-# Resolving VNTRs from whole-exome sequencing (WES) data
-
+# Resolving VNTRs from sequencing data
 ## About
-This repository includes an automated DSL2 Nextflow pipeline to resolve VNTRs (large variable number tandem repeats) from whole-exome sequencing (WES) data in BAM format.
+This repository includes an automated DSL2 Nextflow pipeline to resolve VNTRs (large variable number tandem repeats) from sequencing data in BAM format.
 
-The pipeline has been applied to the **KIV-2 VNTR** of the **LPA gene** (using a novel signature-sequence approach) but can also be used for **other similar VNTRs** by specifying a region for WES read extraction.
+The pipeline has been applied to the **KIV-2 VNTR** of the **LPA gene** (using a novel signature-sequence approach) but can also be used for **other similar VNTRs** by specifying a region of interest.
 
 
 ## Quick Start
@@ -13,13 +12,13 @@ The pipeline has been applied to the **KIV-2 VNTR** of the **LPA gene** (using a
 2) Run the pipeline on a test dataset
 
 ```
-nextflow run genepi/exome-cnv-nf -r v0.4.5 -profile test,<docker,singularity>
+nextflow run genepi/vntr-resolver-nf -r v0.4.5 -profile test,<docker,singularity>
 ```
 
 3) Run the pipeline on your data
 
 ```
-nextflow run genepi/exome-cnv-nf -c <nextflow.config> -r v0.4.5 -profile <docker,singularity>
+nextflow run genepi/vntr-resolver-nf -c <nextflow.config> -r v0.4.5 -profile <docker,singularity>
 ```
 
 ## Parameters
