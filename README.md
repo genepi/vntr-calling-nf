@@ -47,7 +47,7 @@ For LPA, we tested several read extraction strategies (ROI-1 to ROI-9), which ca
 ## Pipeline Steps
 * Build BWA Index on the reference genome
 * Detect KIV2 LPA type (LPA only)
-* Extract reads from the LPA region
+* Extract reads from the defined bed region
 * Convert region to FASTQ
 * Realign region to a single repeat
 * Call variants using [mutserve](https://github.com/seppinho/mutserve)
@@ -83,7 +83,7 @@ Final VNTR data are available within this repository [here](paper_data/vntrs).
 ## Development
 
 ```
-docker build -t genepi/exome-vntr-nf . # don't ingore the dot here
+docker build -t genepi/vntr-resolver-nf . # don't ingore the dot here
 nextflow run main.nf -profile test,development
 ```
 
