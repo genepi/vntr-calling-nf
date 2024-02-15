@@ -10,7 +10,7 @@ process CALCULATE_PERFORMANCE {
   script:
   def avail_mem = 1024
   if (!task.memory) {
-      log.info 'Available memory not known - defaulting to 1GB. Specify process memory requirements to change this.'
+      //log.info 'Available memory not known - defaulting to 1GB. Specify process memory requirements to change this.'
   } else {
       avail_mem = (task.memory.mega*0.8).intValue()
   }

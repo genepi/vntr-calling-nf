@@ -10,7 +10,7 @@
 
 nextflow.enable.dsl = 2
 
-include { VNTR_RESOLVER } from './workflows/vntr-resolver'
+include { VNTR_CALLER } from './workflows/vntr-caller'
 
 /*
 ========================================================================================
@@ -19,5 +19,5 @@ include { VNTR_RESOLVER } from './workflows/vntr-resolver'
 */
 
 workflow {
-    VNTR_RESOLVER ()
+    VNTR_CALLER ()
 }

@@ -30,7 +30,7 @@ include { CALL_VARIANTS_MUTSERVE} from '../modules/local/call_variants_mutserve'
 include { CALCULATE_PERFORMANCE } from '../modules/local/calculate_performance'  addParams(outdir: "$outdir")
 
 
-workflow VNTR_RESOLVER {
+workflow VNTR_CALLER {
 
     BUILD_BWA_INDEX ( ref_fasta )
 
