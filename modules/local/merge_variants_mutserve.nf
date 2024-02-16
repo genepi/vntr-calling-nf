@@ -1,6 +1,6 @@
 process MERGE_VARIANTS_MUTSERVE {
   
-  publishDir "${params.outdir}/mutserve", mode: "copy"
+  publishDir "${params.outdir}/variant_calling", mode: "copy"
 
   input:
   path variants
