@@ -27,6 +27,7 @@ include { EXTRACT_READS         } from '../modules/local/extract_reads'  addPara
 include { BAM_TO_FASTQ          } from '../modules/local/bam_to_fastq'  addParams(outdir: "$outdir")
 include { REALIGN_FASTQ         } from '../modules/local/realign_fastq'  addParams(outdir: "$outdir")
 include { CALL_VARIANTS_MUTSERVE} from '../modules/local/call_variants_mutserve'  addParams(outdir: "$outdir")
+include { MERGE_VARIANTS_MUTSERVE} from '../modules/local/merge_variants_mutserve'  addParams(outdir: "$outdir")
 include { CALCULATE_PERFORMANCE } from '../modules/local/calculate_performance'  addParams(outdir: "$outdir")
 
 
@@ -54,8 +55,9 @@ workflow VNTR_CALLING {
     EXTRACT_READS ( bam_bed_tuple )
     BAM_TO_FASTQ ( EXTRACT_READS.out.extracted_bams_ch )
     REALIGN_FASTQ ( BAM_TO_FASTQ.out.fastq_ch,ref_fasta,BUILD_BWA_INDEX.out.bwa_index_ch )
-    CALL_VARIANTS_MUTSERVE ( REALIGN_FASTQ.out.realigned_ch.collect(),ref_fasta, contig )
-
+    CALL_VARIANTS_MUTSERVE ( REALIGN_FASTQ.out.realigned_ch,ref_fasta, contig )
+    MERGE_VARIANTS_MUTSERVE ( CALL_VARIANTS_MUTSERVE.out.variants_ch.collect(), CALL_VARIANTS_MUTSERVE.out.variants_raw_ch.collect())
+    
     if(params.gold != null) {
       gold_standard = file(params.gold, checkIfExists: true)
       CALCULATE_PERFORMANCE ( CALL_VARIANTS_MUTSERVE.out.variants_ch,gold_standard )
