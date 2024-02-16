@@ -10,3 +10,4 @@ dependencies:
   - bwa=0.7.17
   - openjdk=11.0.9
   - unzip
+  - csvtk=0.26.0
