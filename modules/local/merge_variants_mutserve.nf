@@ -10,7 +10,18 @@ process MERGE_VARIANTS_MUTSERVE {
   path "${params.project}.txt.gz"
   path "${params.project}_raw.txt.gz"
   """
-	csvtk concat -t ${variants} -T -o ${params.project}.txt.gz
-  csvtk concat -t ${variants_raw} -T -o ${params.project}_raw.txt.gz
+  java -jar /opt/genomic-utils.jar csv-concat \
+      --separator '\t' \
+      --output-sep '\t' \
+      --gz \
+      --output ${params.project}.txt.gz \
+      ${variants}
+
+  java -jar /opt/genomic-utils.jar csv-concat \
+      --separator '\t' \
+      --output-sep '\t' \
+      --gz \
+      --output ${params.project}_raw.txt.gz \
+      ${variants_raw}
   """
 }
