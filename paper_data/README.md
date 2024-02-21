@@ -19,6 +19,6 @@ params.contig="KIV2_6"
 
 ### Notes
 * Please note that either **docker**, **singularity** or **slurm** must be available and has to be specified according to your system. Most likely, Docker is only available on your local system (since it requires root permissions for execution). 
-* The `params.input` parameter must be adapted to the location of your BAM filesfile.
+* The `params.input` parameter must be adapted to the location of your BAM files.
 * Reference data for `params.reference` is located [here](../reference-data).
 * We executed this experiment on our Slurm cluster using default configured CPUs and memory and we were able to run the data in 40 min (CPU hours: 7,000).
