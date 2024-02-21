@@ -38,3 +38,7 @@ RUN jbang export portable -O=PatternSearch.jar PatternSearch.java
 
 COPY ./bin/MutservePerformance.java ./
 RUN jbang export portable -O=MutservePerformance.jar MutservePerformance.java
+
+WORKDIR "/opt"
+ENV GENOMIC_UTILS_VERSION="v0.3.7"
+RUN wget https://github.com/genepi/genomic-utils/releases/download/${GENOMIC_UTILS_VERSION}/genomic-utils.jar
