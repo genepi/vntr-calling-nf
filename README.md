@@ -13,13 +13,13 @@ The pipeline has been applied to the **KIV-2 VNTR** of the **LPA gene** (using a
 2) Run the pipeline on a test dataset
 
 ```
-nextflow run genepi/vntr-calling-nf -r v0.4.8 -profile test,<docker,singularity>
+nextflow run genepi/vntr-calling-nf -r v0.4.9 -profile test,<docker,singularity>
 ```
 
 3) Run the pipeline on your data
 
 ```
-nextflow run genepi/vntr-calling-nf -c <nextflow.config> -r v0.4.8 -profile <docker,singularity>
+nextflow run genepi/vntr-calling-nf -c <nextflow.config> -r v0.4.9 -profile <docker,singularity>
 ```
 
 ## Parameters
@@ -84,7 +84,7 @@ Final VNTR data are available within this repository [here](paper_data/vntrs).
 ## Development
 
 ```
-docker build -t genepi/vntr-caller-nf . # don't ingore the dot here
+docker build -t genepi/vntr-calling-nf . # don't ingore the dot here
 nextflow run main.nf -profile test,development
 ```
 
