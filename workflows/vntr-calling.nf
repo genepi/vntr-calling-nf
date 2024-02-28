@@ -60,6 +60,6 @@ workflow VNTR_CALLING {
     
     if(params.gold != null) {
       gold_standard = file(params.gold, checkIfExists: true)
-      CALCULATE_PERFORMANCE ( CALL_VARIANTS_MUTSERVE.out.variants_ch,gold_standard )
+      CALCULATE_PERFORMANCE ( MERGE_VARIANTS_MUTSERVE.out.merged_variants.collect(),gold_standard )
     }
 }
