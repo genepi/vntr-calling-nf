@@ -31,7 +31,8 @@ Steps:
 1) Download [all repeats](psvs/clustalO_input) using e.g. USCS Genome Browser. 
 2) Create reverse complement for regions on the minus strand
 3) Run multiple sequence alignment with [clustalO](https://www.ebi.ac.uk/Tools/msa/clustalo) (select DNA instead of Protein!)
-4) Download [clustalO files](psvs/clustalO_result) and use as input for this [script](scripts/FastaUtil.java). This script compares all repeats and outputs all differences in the reference within the repeats. This then constitutes the list of PSVs.
+4) Download [clustalO files](psvs/clustalO_result) and use as input for this [script](scripts/FastaUtil.java).
+   This script compares all repeats and outputs all differences in the reference within the repeats. This then constitutes the list of PSVs.
 
 ```
 jbang export portable --verbose -O=FastaUtil.jar FastaUtil.java
@@ -39,4 +40,4 @@ java -jar FastaUtil.jar --input "clustalO_result/aln-fasta-lpa.txt" --output "LP
 ```
 
 ### Results
-Results of our workflow steps from above can be found [here](psvs/results)
+The final PSV results (using the described workflow from above) can be found [here](psvs/results).
