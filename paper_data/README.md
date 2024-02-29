@@ -22,3 +22,21 @@ params.contig="KIV2_6"
 * The `params.input` parameter must be adapted to the location of your BAM files.
 * Reference data for `params.reference` is located [here](../reference-data).
 * We executed this experiment on our Slurm cluster using default configured CPUs and memory and we were able to run the data in 33 min (CPU hours: 7,5). Click [here](https://html-preview.github.io/?url=https://raw.githubusercontent.com/genepi/vntr-calling-nf/main/paper_data/results/1000g-wgs-signature.html) to analyze the Nextflow report. 
+
+## Detection of Paralogous Sequence Variants (PSVs)
+
+In our paper, we detect paralogous sequence variants (PSVs) for each analyzed VNTR.  We show that PSVs allows pinpointing the positions where reference-based artifacts are likely to result in false positive calls. The following steps have been applied.
+
+Steps:
+1) Download [all repeats](psvs/clustalO_input) using e.g. USCS Genome Browser. 
+2) Create reverse complement for regions on the minus strand
+3) Run multiple sequence alignment with [clustalO](https://www.ebi.ac.uk/Tools/msa/clustalo) (select DNA instead of Protein!)
+4) Download [clustalO files](psvs/clustalO_result) and use as input for this [script](scripts/FastaUtil.java). This script compares all repeats and outputs all differences in the reference within the repeats. This then constitutes the list of PSVs.
+
+```
+jbang export portable --verbose -O=FastaUtil.jar FastaUtil.java
+java -jar FastaUtil.jar --input "clustalO_result/aln-fasta-lpa.txt" --output "LPA-psvs.txt"
+```
+
+### Results
+Results of our workflow steps from above can be found [here](psvs/results)
