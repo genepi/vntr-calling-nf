@@ -29,9 +29,9 @@ In our paper, we detect paralogous sequence variants (PSVs) for each analyzed VN
 
 Steps:
 1) Download [all repeats](psvs/clustalO_input) using e.g. USCS Genome Browser. 
-2) Create reverse complement for regions on the minus strand
+2) Create reverse complement for regions on the minus strand.
 3) Run multiple sequence alignment with [clustalO](https://www.ebi.ac.uk/Tools/msa/clustalo) (select DNA instead of Protein!)
-4) Download [clustalO files](psvs/clustalO_result) and use as input for this [script](scripts/FastaUtil.java).
+4) Download [clustalO files](psvs/clustalO_result) and use as input for this [algorithm](scripts/FastaUtil.java) developed by us.
    This script compares all repeats and outputs all differences in the reference within the repeats. This then constitutes the list of PSVs.
 
 ```
