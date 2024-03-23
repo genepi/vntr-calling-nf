@@ -74,7 +74,7 @@ params.region="bed/hg37/2_JLR_strategy_hg19.bed"
 ```
 
 ## Paper Analysis
-Final VNTR variant calling data, all required steps and input files or steps are described [here](paper_data).
+Final VNTR variant calling data, all required steps and input files or steps are described [here](paper_analysis).
 
 
 
