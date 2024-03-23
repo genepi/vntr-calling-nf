@@ -1,8 +1,15 @@
-# Paper data
+# Paper Analysis
 
 This README summarizes the location of all input and output files to reproduce our results.  
 
-## Results
+This folder currently includes:
+* VNTR Results from 6 regions (LPA, DMBT1, FLG, NEB, SPDYE3, UBC)
+* Running VNTR variant calling in 1000 Genomes data (downloading data, running pipeline)
+* Step-by-step guide to detect PSVs
+* Description of the annotation process
+
+
+## VNTR Variant Calling Results
 The final outputs of the pipeline can be accessed [here](vntrs). The folder includes all required files for running the pipeline and the annotation process. 
 
 ## Running the VNTR Variant-Calling on the 1000G Phase 3 data
