@@ -2,6 +2,9 @@
 
 This README summarizes the location of all input and output files to reproduce our results.  
 
+## Results
+The final outputs of the pipeline can be accessed [here](vntrs). The folder includes all required files for running the pipeline and the annotation process. 
+
 ## Running the VNTR Variant-Calling on the 1000G Phase 3 data
 
 In our paper, we run our pipeline on the publicly available 1000 Genomes Phase 3 data (30x WGS, mapped to hg38) for the LPA locus. To reproduce it, please execute the following steps:
@@ -41,3 +44,16 @@ java -jar FastaUtil.jar --input "clustalO_result/aln-fasta-lpa.txt" --output "LP
 
 ### Results
 The final PSV results (using the described workflow from above) can be found [here](psvs/results).
+
+
+## Variant Annotation
+
+For variant annotation, we use a in-house developed [annotation tool](https://github.com/lukfor/genepi-annotate) and can be executed as follows:
+
+```
+java genepi-annotate.jar --input variants_lpa.txt --mutation Variant --reference  refs/LPA.fasta --position Pos --maplocus maplocus/MapLocusLPA.txt  --columnwt wt_aas --columnmut mut_aas  --output variants_lpa_annotated.txt
+```
+
+### How does annotation work?
+
+The annotation uses an annotation file (maplocus-file in our internal naming), which is a tabular file that describes the genetic features in the specified reference sequence for a single VNTR unit. In brief, it assigns a freely definable denominator (column map_locus) to portions of the reference sequence, as specified by the position columns. Also a shorthand denominator and a description of the defined region can be added in the respective columns. The columns “coding” and “translated” define whether our annotation tool should translate the respective sequence sequence. The column “ReadingFrame” then specifies whether the translation, respectively reading frame starts at base 1 2 or 3 of the respective feature. 
