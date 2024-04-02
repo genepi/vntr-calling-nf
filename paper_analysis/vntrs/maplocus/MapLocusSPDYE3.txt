@@ -1,0 +1,8 @@
+MapLocus	Position(np)	Start	Stop	Shorthand	Description	Coding	Translated	ReadingFrame
+intron1	1-743	1	743	intron1	intron_upstream	-		
+near_splice	744-769	744	769	near_splice	intronic, near splice site	-		
+5_splice_site	770-771	770	771	5splice	5' splice site	-		
+exon	772-990	772	990	exon	exon	coding	F	3
+3_splice_site	991-992	991	992	3splice	3' splice site	-		
+near_splice	993-1018	993	1018	near_splice	intronic, near splice site	-		
+intron2	1019-1390	1019	1390	large-I	intron_downstream	-		
