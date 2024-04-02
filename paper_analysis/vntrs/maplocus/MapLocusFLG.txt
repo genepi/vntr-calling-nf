@@ -1,0 +1,2 @@
+MapLocus	Position(np)	Start	Stop	Shorthand	Description	Coding	Translated	ReadingFrame
+exon	1-972	1	972	exon	exon 3 FLG	coding	F	1

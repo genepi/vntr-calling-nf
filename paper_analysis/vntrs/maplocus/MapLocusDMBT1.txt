@@ -1,0 +1,20 @@
+MapLocus	Position(np)	Start	Stop	Shorthand	Description	Coding	Translated	ReadingFrame
+intron1	1-592	1	592	intron1	intron	-		
+near_splice	593-618	593	618	near_splice	intronic, near splice site	-		
+5_splice_site	619-620	619	620	5splice	5' splice site	-		
+exon	621-650	621	650	exon	exon	coding	F	3
+3_splice_site	651-652	651	652	3splice	3' splice site	-		
+near_splice	653-678	653	678	near_splice	intronic, near splice site	-		
+intron2	679-2542	679	2542	intron	intron	-		
+near_splice	2543-2568	2543	2568	near_splice	intronic, near splice site	-		
+5_splice_site	2569-2570	2569	2570	5splice	5' splice site	-		
+exon	2571-2603	2571	2603	exon	exon	coding	F	3
+3_splice_site	2604-2605	2604	2605	3splice	3' splice site	-		
+near_splice	2606-2631	2606	2631	near_splice	intronic, near splice site	-		
+intron2	2632-3348	2632	3348	intron	intron	-		
+near_splice	3349-3374	3349	3374	near_splice	intronic, near splice site	-		
+5_splice_site	3375-3376	3375	3376	5splice	5' splice site	-		
+exon	3377-3700	3377	3700	exon	exon	coding	F	3
+3_splice_site	3701-3702	3701	3702	3splice	3' splice site	-		
+near_splice	3703-3728	3703	3728	near_splice	intronic, near splice site	-		
+intron2	3729-4059	3729	4059	intron	intron	-		
