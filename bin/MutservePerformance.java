@@ -53,7 +53,7 @@ public class MutservePerformance implements Callable<Integer> {
 
 		CsvTableWriter writer = new CsvTableWriter(new File(output).getAbsolutePath(), '\t', false);
 
-		String[] columnsWrite = { "ID", "Precision", "Sensitivity", "Specificity" , "F1-Score", "#FP", " #FN", "FP", "FN"  };
+		String[] columnsWrite = { "ID", "Precision", "Sensitivity", "Specificity" , "F1-Score", "#FP", " #FN","#TP", "FP", "FN"  };
 		writer.setColumns(columnsWrite);
 
 		final String pos = "Pos";
@@ -192,8 +192,9 @@ public class MutservePerformance implements Callable<Integer> {
 			writer.setString(4, f1Final);
 			writer.setInteger(5, falsePositiveCount);
 			writer.setInteger(6, falseNegativeCount);
-			writer.setString(7, falsePositives.toString());
-			writer.setString(8, falseNegatives.toString());
+			writer.setInteger(7, truePositiveCount);
+			writer.setString(8, falsePositives.toString());
+			writer.setString(9, falseNegatives.toString());
 			writer.next();
 		}
 		writer.close();
