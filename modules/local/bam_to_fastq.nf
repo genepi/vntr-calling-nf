@@ -7,6 +7,6 @@ process BAM_TO_FASTQ {
   path "*.fastq", emit: realigned_ch
 
 	"""
-  samtools fastq -1 ${bamFile.baseName}.r1.fastq -2 ${bamFile.baseName}.r2.fastq -0 /dev/null -s /dev/null -n ${bamFile}
+  samtools fastq --threads $task.cpus -1 ${bamFile.baseName}.r1.fastq -2 ${bamFile.baseName}.r2.fastq -0 /dev/null -s /dev/null -n ${bamFile}
 	"""
 }
