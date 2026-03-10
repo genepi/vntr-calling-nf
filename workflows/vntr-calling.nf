@@ -1,7 +1,7 @@
 nextflow.enable.dsl = 2
 
 requiredParams = [
-    'project', 'input','reference', 'contig'
+    'project', 'reference', 'contig'
 ]
 
 for (param in requiredParams) {
@@ -14,12 +14,21 @@ if (params.region == null && params.build == null) {
   exit 1, "Please specify build of your input data."
 }
 
-bam_files_ch = Channel.fromPath(params.input)
+// Create input channel from either params.input or params.input_file
+if (params.input != null){
+  params.input
+  bam_files_ch = Channel.fromPath(params.input)
+} else if (params.input_file != null){
+    bam_files_ch = Channel.fromPath(params.input_file).splitCsv(sep: ",", header:false)
+} else {
+  exit 1, "Either input or input_file parameter is required."
+}
+
 ref_fasta = file(params.reference, checkIfExists: true)
 ref_fasta_fai = file(params.reference+".fai", checkIfExists: true)
 contig = params.contig
 
-outdir = "output/${params.project}"
+outdir = "${params.outdir}/output/${params.project}"
 
 include { BUILD_BWA_INDEX       } from '../modules/local/build_bwa_index'
 include { DETECT_TYPE           } from '../modules/local/detect_type'  addParams(outdir: "$outdir")
