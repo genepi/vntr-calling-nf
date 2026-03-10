@@ -9,6 +9,8 @@ process MERGE_VARIANTS_MUTSERVE {
   output:
   path "${params.project}.txt.gz", emit: merged_variants
   path "${params.project}_raw.txt.gz"
+
+  script:
   """
   java -jar /opt/genomic-utils.jar csv-concat \
       --separator '\t' \
