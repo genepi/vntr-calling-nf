@@ -1,7 +1,7 @@
 # vntr-calling-nf: An approach to resolve variants within VNTRs from sequencing data
 
 ## About
-This repository includes an automated DSL2 Nextflow pipeline to resolve VNTRs (large variable number tandem repeats) from sequencing data in BAM format.
+This repository includes an automated DSL2 Nextflow pipeline to resolve VNTRs (large variable number tandem repeats) from sequencing data in BAM or CRAM format.
 
 The pipeline has been applied to the **KIV-2 VNTR** of the **LPA gene** (using a novel signature-sequence approach) but can also be used for **other similar VNTRs** by specifying a region of interest.
 
@@ -27,15 +27,17 @@ nextflow run genepi/vntr-calling-nf -c <nextflow.config> -r v0.4.9 -profile <doc
 | Tables        | Value           | Description  |
 | ------------- |-------------| -------------|
 | project       | my-project | Project name |
-| input      |  /path/to/*.bam     |  Input WES BAM files |
+| input      |  /path/to/*.bam     |  Input WES/WGS BAM or CRAM files |
+| input_file | /path/to/bam_or_cram/files | File containing absolute paths to CRAM or BAM files |
 | reference | /path/to/*fasta  |  Reference used for alignment and variant calling (e.g. single KIV-2 repeat). *fasta.fai file required. |
 | contig |  KIV-2 |    Reference contig for variant calling  |
 
 ### Additional Parameters
 | Tables        | Value           | Description  |
 | ------------- |-------------| -------------|
-| region | /path/to/bed   |  BED coordaintes for read extraction. Only required for other VNTRs than LPA. |
+| region | /path/to/bed   |  BED coordinates for read extraction. Only required for other VNTRs than LPA. |
 | build | hg19 or hg38    |  Specify build for signature detection. Only required for the LPA VNTR. |
+| reference_genome | /path/to/reference_genome | Reference genome. Only required when using CRAM input. |
 
 ## Implementation Details
 For the LPA gene, the workflow uses WES reads aligned to the complete reference genome as an input. First, the complete LPA region is extracted, converted to FASTQ, and screened for the KIV-2B signature sequence. KIV-2 reads are then extracted using a novel signature-sequence approach and remapped to a reference consisting of one single KIV-2 repeat. Using this approach, KIV-2 variants are naturally present only in a subset of reads like somatic mutations and are called using mutserve with settings optimized for low-level variant detection.
@@ -71,6 +73,16 @@ params.input="bams_bgi/*bam"
 params.reference="reference-data/kiv2.fasta"
 params.contig="KIV2_6"
 params.region="bed/hg37/2_JLR_strategy_hg19.bed"
+```
+
+### FLG VNTR
+```
+params.project="FLG"
+params.build="hg38"
+params.reference="paper_analysis/vntrs/refs/FLG.fasta"
+params.contig="FLG_revcomp"
+params.region="paper_analysis/vntrs/beds/flg.bed"
+params.input_file="cram_files.txt"
 ```
 
 ## Paper Analysis
