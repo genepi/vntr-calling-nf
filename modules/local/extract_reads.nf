@@ -10,15 +10,15 @@ process EXTRACT_READS {
   def cram_command = bamFile.Extension == "cram" ? "-T ${params.reference_genome}" : ""
   """
   samtools \
-  view \
-  --threads $task.cpus \
-  -hb \
-  -L ${regionFile} ${cram_command} \
-  ${bamFile} | \
-  samtools \
-  sort \
-  --threads $task.cpus \
-  -n \
-  -o ${bamFile.baseName}.extracted.bam -
+      view \
+      --threads $task.cpus \
+      -hb \
+      -L ${regionFile} ${cram_command} \
+      ${bamFile} | \
+      samtools \
+      sort \
+      --threads $task.cpus \
+      -n \
+      -o ${bamFile.baseName}.extracted.bam -
   """
 }
