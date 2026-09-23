@@ -36,6 +36,7 @@ nextflow run genepi/vntr-calling-nf -c <nextflow.config> -r v0.4.9 -profile <doc
 | ------------- |-------------| -------------|
 | region | /path/to/bed   |  BED coordaintes for read extraction. Only required for other VNTRs than LPA. |
 | build | hg19 or hg38    |  Specify build for signature detection. Only required for the LPA VNTR. |
+| publish_realigned | true or false |  Copy the realigned BAM files to `output/<project>/realign_fastq`. Default: `false`. |
 
 ## Implementation Details
 For the LPA gene, the workflow uses WES reads aligned to the complete reference genome as an input. First, the complete LPA region is extracted, converted to FASTQ, and screened for the KIV-2B signature sequence. KIV-2 reads are then extracted using a novel signature-sequence approach and remapped to a reference consisting of one single KIV-2 repeat. Using this approach, KIV-2 variants are naturally present only in a subset of reads like somatic mutations and are called using mutserve with settings optimized for low-level variant detection.
