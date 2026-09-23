@@ -1,5 +1,5 @@
 process DETECT_TYPE {
-  publishDir "${params.outdir}/pattern", mode: "copy", pattern: '*pattern.txt'
+  //publishDir "${params.outdir}/pattern", mode: "copy", pattern: '*pattern.txt'
   input:
     path bamFile
     path lpaRegion
